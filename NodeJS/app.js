@@ -1,6 +1,9 @@
 // require is used to get the modules from the file in current directely
 const http = require('http');
-const fs = require('fs');
+const routes = require('./Routes')
+
+
+
 
 /*
 function requestListener(req, res){
@@ -32,30 +35,9 @@ function requestListener(req, res){
 
 // listen method is used to listen the server
 
-const server = http.createServer((req, res) => {
+console.log(routes.someText);
 
-    const url = req.url;
-    const method = req.method;
 
-   // get the reequest based on url
-    if (url === '/') {
-        res.setHeader('Content-type', 'text/html');   // to say which type file we can take input
-        res.write('<html> <head> <title> Dhanushkumar - form </title> </head>  <body> <h1> Enter the form details </h1> <form action="/message" method="POST"> <input type="text" placeholder="enter the name" name="name" /> </br> <input type="submit" value="send"/> </form> </body></html>')
-       return res.end()  // used to say the response is completed
-    }
-    else{
-        res.setHeader('Content-type', 'text/html');   // to say which type file we can take input
-        res.write('<html> <head> <title> Dhanushkumar </title> </head>  <body> <h1> hello from server.js </h1> </body><html>')
-       return res.end()
-    }
-
-    // redirect the response
-    if (url === '/message' && method == 'POST') {
-        fs.writeFileSync('hello.txt', 'dummy')
-        res.setHeader('Location', '/'); // location set us to say which location we want to redirection
-        res.statusCode = 302;  // we need to set status code for redirection 302 is for redirection
-        res.end();
-    }
-})
+const server = http.createServer(routes.handler);
 
 server.listen(3000)
